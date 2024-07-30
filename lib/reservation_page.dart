@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'reservation_form.dart';
 import 'reservation_list.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-// Sample data for flights and customers
-final List<String> flights = ['Flight 1', 'Flight 2', 'Flight 3'];
-final List<String> customers = ['Customer 1', 'Customer 2', 'Customer 3'];
-
+/// A page for managing reservations, including adding, listing, and showing details.
 class ReservationPage extends StatefulWidget {
   @override
   _ReservationPageState createState() => _ReservationPageState();
@@ -15,6 +12,7 @@ class ReservationPage extends StatefulWidget {
 
 class _ReservationPageState extends State<ReservationPage> {
   List<Map<String, String>> _reservations = [];
+  final _storage = FlutterSecureStorage();
 
   @override
   void initState() {
@@ -23,29 +21,39 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   Future<void> _loadReservations() async {
-    final prefs = await SharedPreferences.getInstance();
-    final reservations = prefs.getStringList('reservations') ?? [];
+    final reservations = await _storage.read(key: 'reservations');
     setState(() {
-      _reservations = reservations.map((reservation) {
-        final parts = reservation.split('|');
-        return {
-          'name': parts[0],
-          'flight': parts[1],
-          'customer': parts[2],
-        };
-      }).toList();
+      if (reservations != null) {
+        _reservations = reservations.split('|').map((reservation) {
+          final parts = reservation.split('|');
+          return {
+            'name': parts[0],
+            'flight': parts[1],
+            'customer': parts[2],
+          };
+        }).toList();
+      }
     });
   }
 
   Future<void> _addReservation(Map<String, String> reservation) async {
-    final prefs = await SharedPreferences.getInstance();
     setState(() {
       _reservations.add(reservation);
     });
     final reservationString = _reservations
         .map((res) => '${res['name']}|${res['flight']}|${res['customer']}')
-        .toList();
-    await prefs.setStringList('reservations', reservationString);
+        .join('|');
+    await _storage.write(key: 'reservations', value: reservationString);
+  }
+
+  void _deleteReservation(Map<String, String> reservation) async {
+    setState(() {
+      _reservations.remove(reservation);
+    });
+    final reservationString = _reservations
+        .map((res) => '${res['name']}|${res['flight']}|${res['customer']}')
+        .join('|');
+    await _storage.write(key: 'reservations', value: reservationString);
   }
 
   @override
@@ -76,13 +84,23 @@ class _ReservationPageState extends State<ReservationPage> {
           ),
         ],
       ),
-      body: Column(
+      body: Row(
         children: [
-          ReservationForm(
-            onAddReservation: _addReservation,
-          ),
           Expanded(
-            child: ReservationList(reservations: _reservations),
+            flex: 1,
+            child: Column(
+              children: [
+                ReservationForm(
+                  onAddReservation: _addReservation,
+                ),
+                Expanded(
+                  child: ReservationList(
+                    reservations: _reservations,
+                    onDeleteReservation: _deleteReservation,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

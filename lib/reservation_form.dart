@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 final List<String> flights = ['Flight 1', 'Flight 2', 'Flight 3'];
 final List<String> customers = ['Customer 1', 'Customer 2', 'Customer 3'];
 
+/// A form for adding reservations.
 class ReservationForm extends StatefulWidget {
   final Function(Map<String, String>) onAddReservation;
 

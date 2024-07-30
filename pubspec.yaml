@@ -13,9 +13,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   sqflite: ^2.0.0+4
   path: ^1.8.0
-  encrypted_shared_preferences: ^3.0.1
-  shared_preferences: ^2.1.0
-  easy_localization: ^3.0.0
+  flutter_secure_storage: ^7.0.0
+  easy_localization: ^3.0.7
   flutter_localizations:
     sdk: flutter
 
@@ -27,5 +26,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - transitions/en-GB.json
-    - transitions/en-US.json
+    - translations/en-GB.json
+    - translations/en-US.json
