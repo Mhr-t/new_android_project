@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // Add this import for date/time formatting
+import 'package:intl/intl.dart';
 import 'shared_preferences_helper.dart';
 
 class AddEditFlightScreen extends StatefulWidget {
@@ -75,7 +75,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
-              child: const Text('Delete', style: TextStyle(color: Colors.red)),
+              child: Image.asset('images/4476373.png', width: 24, height: 24),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -134,93 +134,99 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
         actions: widget.flight != null
             ? [
           IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
+            icon: Image.asset('images/4476373.png', width: 24, height: 24),
             onPressed: _deleteFlight,
           ),
         ]
             : null,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                widget.flight != null ? 'Edit Flight Details' : 'Add New Flight',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                initialValue: departureCity,
-                decoration: InputDecoration(
-                  labelText: 'Departure City',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.departure_board),
-                ),
-                onSaved: (value) => departureCity = value!,
-                validator: (value) => value!.isEmpty ? 'Please enter departure city' : null,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                initialValue: destinationCity,
-                decoration: InputDecoration(
-                  labelText: 'Destination City',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.flight_land),
-                ),
-                onSaved: (value) => destinationCity = value!,
-                validator: (value) => value!.isEmpty ? 'Please enter destination city' : null,
-              ),
-              const SizedBox(height: 16),
-              GestureDetector(
-                onTap: () => _selectDateTime(context, true),
-                child: AbsorbPointer(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Departure Time',
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.calendar_today),
-                    ),
-                    controller: TextEditingController(
-                      text: DateFormat('yyyy-MM-dd – kk:mm').format(departureTime),
-                    ),
-                    validator: (value) => value!.isEmpty ? 'Please enter departure time' : null,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset('images/images.jpeg', fit: BoxFit.cover),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    widget.flight != null ? 'Edit Flight Details' : 'Add New Flight',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              GestureDetector(
-                onTap: () => _selectDateTime(context, false),
-                child: AbsorbPointer(
-                  child: TextFormField(
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    initialValue: departureCity,
                     decoration: InputDecoration(
-                      labelText: 'Arrival Time',
+                      labelText: 'Departure City',
                       border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.calendar_today),
+                      prefixIcon: Icon(Icons.departure_board),
                     ),
-                    controller: TextEditingController(
-                      text: DateFormat('yyyy-MM-dd – kk:mm').format(arrivalTime),
-                    ),
-                    validator: (value) => value!.isEmpty ? 'Please enter arrival time' : null,
+                    onSaved: (value) => departureCity = value!,
+                    validator: (value) => value!.isEmpty ? 'Please enter departure city' : null,
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    initialValue: destinationCity,
+                    decoration: InputDecoration(
+                      labelText: 'Destination City',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.flight_land),
+                    ),
+                    onSaved: (value) => destinationCity = value!,
+                    validator: (value) => value!.isEmpty ? 'Please enter destination city' : null,
+                  ),
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () => _selectDateTime(context, true),
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Departure Time',
+                          border: OutlineInputBorder(),
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                        controller: TextEditingController(
+                          text: DateFormat('yyyy-MM-dd – kk:mm').format(departureTime),
+                        ),
+                        validator: (value) => value!.isEmpty ? 'Please enter departure time' : null,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () => _selectDateTime(context, false),
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Arrival Time',
+                          border: OutlineInputBorder(),
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                        controller: TextEditingController(
+                          text: DateFormat('yyyy-MM-dd – kk:mm').format(arrivalTime),
+                        ),
+                        validator: (value) => value!.isEmpty ? 'Please enter arrival time' : null,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _saveFlight,
+                    child: Text(widget.flight != null ? 'Update Flight' : 'Add Flight'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _saveFlight,
-                child: Text(widget.flight != null ? 'Update Flight' : 'Add Flight'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor, // Background color
-                  foregroundColor: Colors.white, // Text color
-                  padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

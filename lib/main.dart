@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'flight_list_screen.dart'; // Import your flight management screen
+import 'flight_list_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const FlightListScreen(), // Set the FlightListScreen as the home
+      home: const FlightListScreen(),
     );
   }
 }

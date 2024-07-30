@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  shared_preferences: ^2.2.1 # Updated to latest version
+  shared_preferences: ^2.2.1
   intl: ^0.18.0 # Add intl package for date/time formatting
 
 dev_dependencies:
