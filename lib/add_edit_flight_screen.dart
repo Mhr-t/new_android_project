@@ -38,6 +38,12 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
   void _saveFlight() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      if (departureTime.isAfter(arrivalTime)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Departure time must be before arrival time')),
+        );
+        return;
+      }
       final flight = {
         'departureCity': departureCity,
         'destinationCity': destinationCity,
@@ -59,7 +65,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Delete Flight'),
+          title: const Text('Delete Flight'),
           content: Text(
             'Are you sure you want to delete this flight?\n\n'
                 'Departure City: $departureCity\n'
@@ -75,7 +81,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
-              child: Image.asset('images/4476373.png', width: 24, height: 24),
+              child: const Icon(Icons.delete),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -89,40 +95,33 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
 
   Future<void> _selectDateTime(BuildContext context, bool isDeparture) async {
     final initialDateTime = isDeparture ? departureTime : arrivalTime;
-    final DateTime? pickedDateTime = await showDatePicker(
+    final pickedDate = await showDatePicker(
       context: context,
       initialDate: initialDateTime,
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
-    ).then((date) {
-      if (date != null) {
-        return showTimePicker(
-          context: context,
-          initialTime: TimeOfDay.fromDateTime(initialDateTime),
-        ).then((time) {
-          if (time != null) {
-            return DateTime(
-              date.year,
-              date.month,
-              date.day,
-              time.hour,
-              time.minute,
-            );
+    );
+    if (pickedDate != null) {
+      final pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(initialDateTime),
+      );
+      if (pickedTime != null) {
+        setState(() {
+          final dateTime = DateTime(
+            pickedDate.year,
+            pickedDate.month,
+            pickedDate.day,
+            pickedTime.hour,
+            pickedTime.minute,
+          );
+          if (isDeparture) {
+            departureTime = dateTime;
+          } else {
+            arrivalTime = dateTime;
           }
-          return null;
         });
       }
-      return null;
-    });
-
-    if (pickedDateTime != null) {
-      setState(() {
-        if (isDeparture) {
-          departureTime = pickedDateTime;
-        } else {
-          arrivalTime = pickedDateTime;
-        }
-      });
     }
   }
 
@@ -134,7 +133,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
         actions: widget.flight != null
             ? [
           IconButton(
-            icon: Image.asset('images/4476373.png', width: 24, height: 24),
+            icon: const Icon(Icons.delete),
             onPressed: _deleteFlight,
           ),
         ]
@@ -158,7 +157,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
                   const SizedBox(height: 20),
                   TextFormField(
                     initialValue: departureCity,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Departure City',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.departure_board),
@@ -169,7 +168,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
                   const SizedBox(height: 16),
                   TextFormField(
                     initialValue: destinationCity,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Destination City',
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.flight_land),
@@ -182,7 +181,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
                     onTap: () => _selectDateTime(context, true),
                     child: AbsorbPointer(
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Departure Time',
                           border: OutlineInputBorder(),
                           suffixIcon: Icon(Icons.calendar_today),
@@ -199,7 +198,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
                     onTap: () => _selectDateTime(context, false),
                     child: AbsorbPointer(
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Arrival Time',
                           border: OutlineInputBorder(),
                           suffixIcon: Icon(Icons.calendar_today),
@@ -218,7 +217,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor,
                       foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
                     ),
                   ),

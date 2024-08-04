@@ -1,0 +1,16 @@
+{
+  "title": "Gestion des vols",
+  "addFlight": "Ajouter un vol",
+  "editFlight": "Modifier le vol",
+  "deleteFlight": "Supprimer le vol",
+  "departureCity": "Ville de départ",
+  "destinationCity": "Ville de destination",
+  "departureTime": "Heure de départ",
+  "arrivalTime": "Heure d'arrivée",
+  "updateFlight": "Mettre à jour le vol",
+  "addNewFlight": "Ajouter un nouveau vol",
+  "editFlightDetails": "Modifier les détails du vol",
+  "cancel": "Annuler",
+  "noFlightsAvailable": "Aucun vol disponible.",
+  "error": "Erreur: "
+}
