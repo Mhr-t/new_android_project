@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'shared_preferences_helper.dart';
+import 'localization.dart';
 
 class AddEditFlightScreen extends StatefulWidget {
   final Map<String, dynamic>? flight;
@@ -31,7 +32,7 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
       departureCity = '';
       destinationCity = '';
       departureTime = DateTime.now();
-      arrivalTime = DateTime.now().add(Duration(hours: 1));
+      arrivalTime = DateTime.now().add(const Duration(hours: 1));
     }
   }
 
@@ -151,45 +152,45 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.flight != null ? 'Edit Flight Details' : 'Add New Flight',
+                    widget.flight != null ? Localization.of(context).translate('editFlightDetails') : Localization.of(context).translate('addNewFlight'),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
                     initialValue: departureCity,
-                    decoration: const InputDecoration(
-                      labelText: 'Departure City',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.departure_board),
+                    decoration: InputDecoration(
+                      labelText: Localization.of(context).translate('departureCity'),
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.departure_board),
                     ),
                     onSaved: (value) => departureCity = value!,
-                    validator: (value) => value!.isEmpty ? 'Please enter departure city' : null,
+                    validator: (value) => value!.isEmpty ? Localization.of(context).translate('pleaseEnterDepartureCity') : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     initialValue: destinationCity,
-                    decoration: const InputDecoration(
-                      labelText: 'Destination City',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.flight_land),
+                    decoration: InputDecoration(
+                      labelText: Localization.of(context).translate('destinationCity'),
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.flight_land),
                     ),
                     onSaved: (value) => destinationCity = value!,
-                    validator: (value) => value!.isEmpty ? 'Please enter destination city' : null,
+                    validator: (value) => value!.isEmpty ? Localization.of(context).translate('pleaseEnterDestinationCity') : null,
                   ),
                   const SizedBox(height: 16),
                   GestureDetector(
                     onTap: () => _selectDateTime(context, true),
                     child: AbsorbPointer(
                       child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Departure Time',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.calendar_today),
+                        decoration: InputDecoration(
+                          labelText: Localization.of(context).translate('departureTime'),
+                          border: const OutlineInputBorder(),
+                          suffixIcon: const Icon(Icons.calendar_today),
                         ),
                         controller: TextEditingController(
                           text: DateFormat('yyyy-MM-dd – kk:mm').format(departureTime),
                         ),
-                        validator: (value) => value!.isEmpty ? 'Please enter departure time' : null,
+                        validator: (value) => value!.isEmpty ? Localization.of(context).translate('pleaseEnterDepartureTime') : null,
                       ),
                     ),
                   ),
@@ -198,22 +199,22 @@ class _AddEditFlightScreenState extends State<AddEditFlightScreen> {
                     onTap: () => _selectDateTime(context, false),
                     child: AbsorbPointer(
                       child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Arrival Time',
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.calendar_today),
+                        decoration: InputDecoration(
+                          labelText: Localization.of(context).translate('arrivalTime'),
+                          border: const OutlineInputBorder(),
+                          suffixIcon: const Icon(Icons.calendar_today),
                         ),
                         controller: TextEditingController(
                           text: DateFormat('yyyy-MM-dd – kk:mm').format(arrivalTime),
                         ),
-                        validator: (value) => value!.isEmpty ? 'Please enter arrival time' : null,
+                        validator: (value) => value!.isEmpty ? Localization.of(context).translate('pleaseEnterArrivalTime') : null,
                       ),
                     ),
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: _saveFlight,
-                    child: Text(widget.flight != null ? 'Update Flight' : 'Add Flight'),
+                    child: Text(widget.flight != null ? Localization.of(context).translate('updateFlight') : Localization.of(context).translate('addFlight')),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor,
                       foregroundColor: Colors.white,

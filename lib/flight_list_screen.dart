@@ -44,34 +44,22 @@ class _FlightListScreenState extends State<FlightListScreen> {
       appBar: AppBar(
         title: Text(Localization.of(context).translate('title')),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.language),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(Localization.of(context).translate('changeLanguage')),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ListTile(
-                        title: const Text('English'),
-                        onTap: () {
-                          _changeLanguage('en');
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('Français'),
-                        onTap: () {
-                          _changeLanguage('fr');
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              );
+          DropdownButton<Locale>(
+            value: Localizations.localeOf(context),
+            icon: const Icon(Icons.language, color: Colors.blue),
+            dropdownColor: Colors.cyan,
+            items: const [
+              DropdownMenuItem(
+                value: Locale('en'),
+                child: Text('English'),
+              ),
+              DropdownMenuItem(
+                value: Locale('fr'),
+                child: Text('Français'),
+              ),
+            ],
+            onChanged: (Locale? locale) {
+              if (locale != null) _changeLanguage(locale.languageCode);
             },
           ),
         ],
@@ -79,7 +67,8 @@ class _FlightListScreenState extends State<FlightListScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset('images/images.jpeg', fit: BoxFit.cover),
+          Image.asset('images/images.jpe'
+              'g', fit: BoxFit.cover), // Ensure the correct path
           FutureBuilder<List<Map<String, dynamic>>>(
             future: _flights,
             builder: (context, snapshot) {
@@ -87,7 +76,9 @@ class _FlightListScreenState extends State<FlightListScreen> {
                 return const Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasError) {
-                return Center(child: Text('${Localization.of(context).translate('error')} ${snapshot.error}'));
+                return Center(
+                  child: Text('${Localization.of(context).translate('error')} ${snapshot.error}'),
+                );
               }
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Center(child: Text(Localization.of(context).translate('noFlightsAvailable')));
@@ -99,22 +90,32 @@ class _FlightListScreenState extends State<FlightListScreen> {
                   final departureTime = DateFormat('yyyy-MM-dd – HH:mm').format(DateTime.parse(flight['departureTime']));
                   final arrivalTime = DateFormat('yyyy-MM-dd – HH:mm').format(DateTime.parse(flight['arrivalTime']));
 
-                  return ListTile(
-                    title: Text('${flight['departureCity']} to ${flight['destinationCity']}'),
-                    subtitle: Text('${Localization.of(context).translate('departureTime')}: $departureTime, ${Localization.of(context).translate('arrivalTime')}: $arrivalTime'),
-                    onTap: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddEditFlightScreen(
-                            flight: flight,
-                            index: index,
-                            onFlightUpdated: _onFlightUpdated,
-                          ),
+                  return Hero(
+                    tag: 'flight_$index',
+                    child: Card(
+                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: ListTile(
+                        title: Text('${flight['departureCity']} to ${flight['destinationCity']}'),
+                        subtitle: Text(
+                          '${Localization.of(context).translate('departureTime')}: $departureTime\n${Localization.of(context).translate('arrivalTime')}: $arrivalTime',
                         ),
-                      );
-                      _onFlightUpdated();
-                    },
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddEditFlightScreen(
+                                flight: flight,
+                                index: index,
+                                onFlightUpdated: _onFlightUpdated,
+                              ),
+                            ),
+                          );
+                          _onFlightUpdated();
+                        },
+                      ),
+                    ),
                   );
                 },
               );

@@ -40,6 +40,7 @@ class _MyAppState extends State<MyApp> {
         Localization.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       home: FlightListScreen(onLocaleChange: _setLocale),
     );

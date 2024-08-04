@@ -27,6 +27,7 @@ flutter:
     - images/4476373.png
     - images/button-304224_1280.png
     - images/images.jpeg
+    - images/logo.jpg
     - assets/LANG/EN.json  # Ensure the correct path
     - assets/LANG/FR.json  # Ensure the correct path
 
