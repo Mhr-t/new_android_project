@@ -28,3 +28,4 @@ flutter:
   assets:
     - translations/en-GB.json
     - translations/en-US.json
+    - images/background.jpg

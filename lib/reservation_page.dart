@@ -84,23 +84,35 @@ class _ReservationPageState extends State<ReservationPage> {
           ),
         ],
       ),
-      body: Row(
+      body: Stack(
         children: [
-          Expanded(
-            flex: 1,
-            child: Column(
-              children: [
-                ReservationForm(
-                  onAddReservation: _addReservation,
-                ),
-                Expanded(
-                  child: ReservationList(
-                    reservations: _reservations,
-                    onDeleteReservation: _deleteReservation,
-                  ),
-                ),
-              ],
+          // Background image
+          Positioned.fill(
+            child: Image.asset(
+              'images/background.jpg',
+              fit: BoxFit.cover,
             ),
+          ),
+          // Foreground content
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    ReservationForm(
+                      onAddReservation: _addReservation,
+                    ),
+                    Expanded(
+                      child: ReservationList(
+                        reservations: _reservations,
+                        onDeleteReservation: _deleteReservation,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
