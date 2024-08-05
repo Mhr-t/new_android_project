@@ -1,4 +1,4 @@
-name: your_app_name
+name: airplane_list_page
 description: A new Flutter project for managing a list of airplanes.
 
 version: 1.0.0+1
@@ -21,7 +21,7 @@ flutter:
 
 
 
-  
+
 
 
 
