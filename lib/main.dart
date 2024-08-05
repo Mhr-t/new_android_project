@@ -1,7 +1,5 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
-import 'pages/airplane_list_page.dart';
-import 'pages/customer_form_page.dart';
+import 'airplane_list_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,4 +16,5 @@ class MyApp extends StatelessWidget {
       home: AirplaneListPage(),
     );
   }
+
 }
