@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'localization.dart';
+import 'home_screen.dart';
 import 'flight_list_screen.dart';
 
 void main() {
@@ -42,7 +43,10 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: FlightListScreen(onLocaleChange: _setLocale),
+      home: HomeScreen(onLocaleChange: _setLocale),
+      routes: {
+        '/flights': (context) => FlightListScreen(onLocaleChange: _setLocale),
+      },
     );
   }
 }
