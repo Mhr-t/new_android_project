@@ -1,44 +1,28 @@
-name: new_android_project
-description: "A new Flutter project."
+name: airplane_list_page1
+description: A new Flutter project for managing a list of airplanes.
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.6
-  shared_preferences: ^2.2.1
-  intl: ^0.19.0  # Update intl package to match flutter_localizations dependency
-  flutter_localizations:   # Add flutter_localizations package
+  flutter_localizations:
     sdk: flutter
+  intl: ^0.19.0
+  provider: ^6.0.1
+  shared_preferences: ^2.0.6
+  flutter_secure_storage: ^4.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
 
   assets:
-    - images/4476373.png
-    - images/button-304224_1280.png
-    - images/images.jpeg
-    - images/logo.jpg
-    - assets/LANG/EN.json  # Ensure the correct path
-    - assets/LANG/FR.json  # Ensure the correct path
-
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+    - assets/translations/en.json
+    - assets/translations/fr.json

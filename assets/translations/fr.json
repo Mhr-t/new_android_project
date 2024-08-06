@@ -1,0 +1,12 @@
+{
+  "title": "Gestion des avions",
+  "airlines": "Compagnies aériennes",
+  "go_to_airplane_list": "Aller à la liste des avions",
+  "airplane_list": "Liste des avions",
+  "search_airplanes": "Rechercher des avions",
+  "passengers_speed_range": "Passagers: {0}, Vitesse: {1}, Portée: {2}",
+  "instructions": "Instructions",
+  "instructions_detail": "Voici les instructions sur l'utilisation de l'interface...",
+  "ok": "D'accord",
+  "choose_language": "Choisir la langue"
+}
