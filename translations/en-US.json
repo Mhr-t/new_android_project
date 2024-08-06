@@ -1,0 +1,14 @@
+{
+  "title": "Airline Reservations",
+  "instructions": "Use this page to add reservations, select existing flights and customers, and view the list of reservations.",
+  "reservation_name": "Reservation Name",
+  "enter_reservation_name": "Please enter a reservation name",
+  "select_customer": "Select Customer",
+  "select_flight": "Select Flight",
+  "add_reservation": "Add Reservation",
+  "reservation_details": "Reservation Details",
+  "name": "Name",
+  "flight": "Flight",
+  "customer": "Customer",
+  "ok": "OK"
+}
