@@ -1,0 +1,12 @@
+{
+  "title": "Airplane Management",
+  "airlines": "Airlines",
+  "go_to_airplane_list": "Go to Airplane List",
+  "airplane_list": "Airplane List",
+  "search_airplanes": "Search Airplanes",
+  "passengers_speed_range": "Passengers: {0}, Speed: {1}, Range: {2}",
+  "instructions": "Instructions",
+  "instructions_detail": "Here are the instructions on how to use the interface...",
+  "ok": "OK",
+  "choose_language": "Choose Language"
+}
