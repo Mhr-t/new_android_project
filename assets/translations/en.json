@@ -6,7 +6,7 @@
   "search_airplanes": "Search Airplanes",
   "passengers_speed_range": "Passengers: {0}, Speed: {1}, Range: {2}",
   "instructions": "Instructions",
-  "instructions_detail": "Here are the instructions on how to use the interface...",
+  "instructions_detail": "Here are the instructions on how to use the interface:\n\n1. To add an airplane, click on the '+' button at the bottom right of the screen.\n2. Use the search bar to filter airplanes by type.\n3. Tap on any airplane in the list to view details, update, or delete it.\n4. Use the 'Info' icon on the top right to view these instructions again.\n5. Switch languages using the 'Language' icon in the app bar.",
   "ok": "OK",
   "choose_language": "Choose Language"
 }
