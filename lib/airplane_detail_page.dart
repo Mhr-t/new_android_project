@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'models/airplane_model.dart';
+import 'airplane_model.dart';
 
+/// The page that displays the details of a selected airplane and allows the user to update or delete it.
 class AirplaneDetailPage extends StatefulWidget {
   final Airplane airplane;
   final Function(Airplane) onUpdate;
@@ -32,6 +33,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
     _rangeController = TextEditingController(text: widget.airplane.range.toString());
   }
 
+  /// Updates the airplane data and pops the page.
   void _updateAirplane() {
     if (_formKey.currentState!.validate()) {
       Airplane updatedAirplane = Airplane(
@@ -43,12 +45,22 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
       );
       widget.onUpdate(updatedAirplane);
       Navigator.pop(context);
+    } else {
+      _showSnackbar('Please correct the errors in the form');
     }
   }
 
+  /// Deletes the airplane and pops the page.
   void _deleteAirplane() {
     widget.onDelete(widget.airplane.id);
     Navigator.pop(context);
+  }
+
+  /// Displays a Snackbar with a given message.
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override

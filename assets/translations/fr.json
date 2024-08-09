@@ -6,7 +6,7 @@
   "search_airplanes": "Rechercher des avions",
   "passengers_speed_range": "Passagers: {0}, Vitesse: {1}, Portée: {2}",
   "instructions": "Instructions",
-  "instructions_detail": "Voici les instructions sur l'utilisation de l'interface...",
+  "instructions_detail": "Voici les instructions sur l'utilisation de l'interface :\n\n1. Pour ajouter un avion, cliquez sur le bouton '+' en bas à droite de l'écran.\n2. Utilisez la barre de recherche pour filtrer les avions par type.\n3. Appuyez sur un avion dans la liste pour voir les détails, mettre à jour ou supprimer.\n4. Utilisez l'icône 'Info' en haut à droite pour revoir ces instructions.\n5. Changez de langue en utilisant l'icône 'Langue' dans la barre d'application.",
   "ok": "D'accord",
   "choose_language": "Choisir la langue"
 }

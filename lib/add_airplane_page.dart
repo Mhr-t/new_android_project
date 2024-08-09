@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'models/airplane_model.dart';
+import 'airplane_model.dart';
 
+/// The page that allows the user to add a new airplane.
 class AddAirplanePage extends StatefulWidget {
   @override
   _AddAirplanePageState createState() => _AddAirplanePageState();
@@ -13,6 +14,7 @@ class _AddAirplanePageState extends State<AddAirplanePage> {
   final TextEditingController _maxSpeedController = TextEditingController();
   final TextEditingController _rangeController = TextEditingController();
 
+  /// Saves the airplane data and pops the page.
   void _saveAirplane() {
     if (_formKey.currentState!.validate()) {
       Airplane airplane = Airplane(
@@ -23,7 +25,16 @@ class _AddAirplanePageState extends State<AddAirplanePage> {
         range: int.parse(_rangeController.text),
       );
       Navigator.pop(context, airplane);
+    } else {
+      _showSnackbar('Please correct the errors in the form');
     }
+  }
+
+  /// Displays a Snackbar with a given message.
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override

@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'l10n/app_localizations.dart';
+import 'app_localizations.dart';
 import 'add_airplane_page.dart';
 import 'airplane_detail_page.dart';
-import 'models/airplane_model.dart';
-import 'utils/encrypted_preferences.dart';
+import 'airplane_model.dart';
+import 'encrypted_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// The page that displays a list of airplanes and provides functionalities to add, update, or delete an airplane.
 class AirplaneListPage extends StatefulWidget {
   @override
   _AirplaneListPageState createState() => _AirplaneListPageState();
@@ -33,6 +34,7 @@ class _AirplaneListPageState extends State<AirplaneListPage> {
     super.dispose();
   }
 
+  /// Loads airplanes from SharedPreferences and updates the state.
   Future<void> _loadAirplanes() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String airplanesJson = prefs.getString('airplaneList') ?? '[]';
@@ -44,12 +46,14 @@ class _AirplaneListPageState extends State<AirplaneListPage> {
     });
   }
 
+  /// Saves the current list of airplanes to SharedPreferences.
   Future<void> _saveAirplanes() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String airplanesJson = jsonEncode(_airplaneList.map((airplane) => airplane.toMap()).toList());
     prefs.setString('airplaneList', airplanesJson);
   }
 
+  /// Loads the search text from encrypted preferences.
   Future<void> _loadSearchText() async {
     String? searchText = await EncryptedPreferences.readValue('searchText');
     setState(() {
@@ -58,10 +62,12 @@ class _AirplaneListPageState extends State<AirplaneListPage> {
     });
   }
 
+  /// Saves the search text to encrypted preferences.
   Future<void> _saveSearchText(String text) async {
     await EncryptedPreferences.writeValue('searchText', text);
   }
 
+  /// Filters the airplane list based on the search text.
   void _filterAirplanes() {
     setState(() {
       _searchText = _searchController.text.toLowerCase();
@@ -72,14 +78,17 @@ class _AirplaneListPageState extends State<AirplaneListPage> {
     });
   }
 
+  /// Adds a new airplane to the list and updates the state.
   void _addAirplane(Airplane airplane) {
     setState(() {
       _airplaneList.add(airplane);
       _filteredAirplaneList = _airplaneList;
     });
     _saveAirplanes();
+    _showSnackbar('Airplane added successfully');
   }
 
+  /// Updates an existing airplane in the list and updates the state.
   void _updateAirplane(Airplane updatedAirplane) {
     setState(() {
       int index = _airplaneList.indexWhere((airplane) => airplane.id == updatedAirplane.id);
@@ -89,14 +98,24 @@ class _AirplaneListPageState extends State<AirplaneListPage> {
       }
     });
     _saveAirplanes();
+    _showSnackbar('Airplane updated successfully');
   }
 
+  /// Deletes an airplane from the list and updates the state.
   void _deleteAirplane(int id) {
     setState(() {
       _airplaneList.removeWhere((airplane) => airplane.id == id);
       _filteredAirplaneList = _airplaneList;
     });
     _saveAirplanes();
+    _showSnackbar('Airplane deleted successfully');
+  }
+
+  /// Displays a Snackbar with a given message.
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
@@ -219,6 +238,7 @@ class _AirplaneListPageState extends State<AirplaneListPage> {
     );
   }
 
+  /// Shows an AlertDialog with instructions on how to use the interface.
   void _showInstructions() {
     showDialog(
       context: context,

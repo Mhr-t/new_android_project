@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'l10n/app_localizations.dart';
+import 'app_localizations.dart';
 import 'airplane_list_page.dart';
 
+/// The Home Page widget that provides a button to navigate to the Airplane List page.
 class HomePage extends StatelessWidget {
   final Function(Locale) changeLocale;
 
