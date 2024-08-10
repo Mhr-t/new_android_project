@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import 'reservation_form.dart';
 import 'reservation_list.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-/// A page for managing reservations, including adding, listing, and showing details.
 class ReservationPage extends StatefulWidget {
   @override
   _ReservationPageState createState() => _ReservationPageState();
@@ -12,7 +12,6 @@ class ReservationPage extends StatefulWidget {
 
 class _ReservationPageState extends State<ReservationPage> {
   List<Map<String, String>> _reservations = [];
-  final _storage = FlutterSecureStorage();
 
   @override
   void initState() {
@@ -21,17 +20,13 @@ class _ReservationPageState extends State<ReservationPage> {
   }
 
   Future<void> _loadReservations() async {
-    final reservations = await _storage.read(key: 'reservations');
+    final prefs = await SharedPreferences.getInstance();
+    final reservations = prefs.getString('reservations');
     setState(() {
       if (reservations != null) {
-        _reservations = reservations.split('|').map((reservation) {
-          final parts = reservation.split('|');
-          return {
-            'name': parts[0],
-            'flight': parts[1],
-            'customer': parts[2],
-          };
-        }).toList();
+        _reservations = (json.decode(reservations) as List)
+            .map((item) => Map<String, String>.from(item))
+            .toList();
       }
     });
   }
@@ -40,82 +35,109 @@ class _ReservationPageState extends State<ReservationPage> {
     setState(() {
       _reservations.add(reservation);
     });
-    final reservationString = _reservations
-        .map((res) => '${res['name']}|${res['flight']}|${res['customer']}')
-        .join('|');
-    await _storage.write(key: 'reservations', value: reservationString);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('reservations', json.encode(_reservations));
   }
 
   void _deleteReservation(Map<String, String> reservation) async {
     setState(() {
       _reservations.remove(reservation);
     });
-    final reservationString = _reservations
-        .map((res) => '${res['name']}|${res['flight']}|${res['customer']}')
-        .join('|');
-    await _storage.write(key: 'reservations', value: reservationString);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('reservations', json.encode(_reservations));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(tr('title')),
+        title: Text(tr('reservation_page_title')),
         actions: [
           IconButton(
             icon: Icon(Icons.info_outline),
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text(tr('instructions')),
-                    content: Text(tr('instructions')),
-                    actions: [
-                      TextButton(
-                        child: Text(tr('ok')),
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ],
-                  );
-                },
-              );
+              _showInstructionsDialog(context);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.language),
+            onPressed: () {
+              _showLanguageDialog(context);
             },
           ),
         ],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          // Background image
-          Positioned.fill(
-            child: Image.asset(
-              'images/background.jpg',
-              fit: BoxFit.cover,
+          ReservationForm(onAddReservation: _addReservation),
+          Expanded(
+            child: ReservationList(
+              reservations: _reservations,
+              onDeleteReservation: _deleteReservation,
             ),
-          ),
-          // Foreground content
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    ReservationForm(
-                      onAddReservation: _addReservation,
-                    ),
-                    Expanded(
-                      child: ReservationList(
-                        reservations: _reservations,
-                        onDeleteReservation: _deleteReservation,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
           ),
         ],
       ),
+    );
+  }
+
+  void _showInstructionsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Instructions').tr(),
+          content: Text('Here is how to use the Reservation Page:\n\n'
+              '1. Use the form at the top to add new reservations.\n'
+              '2. View the list of reservations below.\n'
+              '3. Tap on an item to view details.\n'
+              '4. Swipe left or tap the delete icon to remove a reservation.\n'
+              '5. Change the language using the language button in the AppBar.'),
+          actions: [
+            TextButton(
+              child: Text('OK').tr(),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Select Language').tr(),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text('English (US)'),
+                onTap: () {
+                  context.setLocale(Locale('en', 'US'));
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: Text('English (UK)'),
+                onTap: () {
+                  context.setLocale(Locale('en', 'GB'));
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: Text('Français'),
+                onTap: () {
+                  context.setLocale(Locale('fr', 'FR'));
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

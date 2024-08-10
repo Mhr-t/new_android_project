@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-/// A list displaying reservations with details and delete functionality.
 class ReservationList extends StatelessWidget {
   final List<Map<String, String>> reservations;
   final Function(Map<String, String>) onDeleteReservation;

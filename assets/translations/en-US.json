@@ -1,0 +1,20 @@
+{
+  "reservation_page_title": "Reservation Page",
+  "instructions": "Instructions",
+  "instructions_content": "To use this app:\n\n1. Use the form to add a reservation.\n2. Tap on a reservation to view details.\n3. Swipe to delete a reservation.\n4. The list will persist across app restarts.",
+  "ok": "OK",
+  "confirm_delete": "Confirm Delete",
+  "are_you_sure": "Are you sure you want to delete this reservation?",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "reservation_deleted": "Reservation deleted.",
+  "reservation_name": "Reservation Name",
+  "enter_reservation_name": "Please enter a reservation name.",
+  "select_customer": "Select Customer",
+  "select_flight": "Select Flight",
+  "add_reservation": "Add Reservation",
+  "reservation_details": "Reservation Details",
+  "name": "Name",
+  "flight": "Flight",
+  "customer": "Customer"
+}

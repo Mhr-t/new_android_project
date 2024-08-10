@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'home_page.dart'; // Import the homepage
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,8 +9,8 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: [Locale('en', 'US'), Locale('en', 'GB')],
-      path: 'translations', // <-- change the path of the translation files
+      supportedLocales: [Locale('en', 'US'), Locale('en', 'GB'), Locale('fr', 'FR')],
+      path: 'assets/translations',
       fallbackLocale: Locale('en', 'US'),
       child: MyApp(),
     ),
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(), // Set the homepage as the initial screen
+      home: HomePage(),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,

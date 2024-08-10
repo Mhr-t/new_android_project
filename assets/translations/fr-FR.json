@@ -1,0 +1,22 @@
+{
+  "reservation_page_title": "Page de Réservation",
+  "instructions": "Instructions",
+  "instructions_content": "Voici comment utiliser cette application.",
+  "ok": "OK",
+  "confirm_delete": "Confirmer la suppression",
+  "are_you_sure": "Êtes-vous sûr ?",
+  "reservation_deleted": "Réservation supprimée",
+  "reservation_name": "Nom de la Réservation",
+  "select_customer": "Sélectionner un Client",
+  "select_flight": "Sélectionner un Vol",
+  "add_reservation": "Ajouter une Réservation",
+  "cancel": "Annuler",
+  "delete": "Supprimer",
+  "reservation_details": "Détails de la Réservation",
+  "name": "Nom",
+  "flight": "Vol",
+  "customer": "Client",
+  "go_to_reservation_page": "Aller à la Page de Réservation",
+  "title": "Réservations",
+  "language": "Langue"
+}
